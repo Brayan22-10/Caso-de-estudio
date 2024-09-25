@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+#Funcion
 class Prestamo(ABC):
     @abstractmethod
     def prestar(self):
@@ -260,3 +260,4 @@ def menu():
 
 if __name__ == "__main__":
     menu()
+#este mensaje solo se mostrara en la rama 2#
