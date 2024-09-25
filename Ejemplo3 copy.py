@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+#Funcion
 class Prestamo(ABC):
     @abstractmethod
     def prestar(self):
@@ -96,6 +96,52 @@ class CD(Material, Prestamo):
         else:
             print(f"{self.titulo} no estaba prestado.")
 
+class Juego(Material, Prestamo):
+    def __init__(self, titulo, autor, año, plataforma):
+        super().__init__(titulo, autor, año)
+        self.plataforma = plataforma
+        self.prestado = False
+
+    def mostrar_informacion(self):
+        print(f"Juego: {self.titulo}, Desarrollador: {self.autor}, Año: {self.año}, Plataforma: {self.plataforma}")
+
+    def prestar(self):
+        if not self.prestado:
+            self.prestado = True
+            print(f"{self.titulo} ha sido prestado.")
+        else:
+            print(f"{self.titulo} ya está prestado.")
+
+    def devolver(self):
+        if self.prestado:
+            self.prestado = False
+            print(f"{self.titulo} ha sido devuelto.")
+        else:
+            print(f"{self.titulo} no estaba prestado.")
+
+class Audiolibro(Material, Prestamo):
+    def __init__(self, titulo, autor, año, duracion):
+        super().__init__(titulo, autor, año)
+        self.duracion = duracion
+        self.prestado = False
+
+    def mostrar_informacion(self):
+        print(f"Audiolibro: {self.titulo}, Narrador: {self.autor}, Año: {self.año}, Duración: {self.duracion} mins")
+
+    def prestar(self):
+        if not self.prestado:
+            self.prestado = True
+            print(f"{self.titulo} ha sido prestado.")
+        else:
+            print(f"{self.titulo} ya está prestado.")
+
+    def devolver(self):
+        if self.prestado:
+            self.prestado = False
+            print(f"{self.titulo} ha sido devuelto.")
+        else:
+            print(f"{self.titulo} no estaba prestado.")
+
 def obtener_numero(mensaje):
     while True:
         valor = input(mensaje)
@@ -112,10 +158,12 @@ def menu():
         print("2. Agregar Revista")
         print("3. Agregar DVD")
         print("4. Agregar CD")
-        print("5. Mostrar Información de Materiales")
-        print("6. Prestar Material")
-        print("7. Devolver Material")
-        print("8. Salir")
+        print("5. Agregar Juego")
+        print("6. Agregar Audiolibro")
+        print("7. Mostrar Información de Materiales")
+        print("8. Prestar Material")
+        print("9. Devolver Material")
+        print("10. Salir")
         opcion = input("Elige una opción: ")
 
         if opcion == '1':
@@ -155,13 +203,31 @@ def menu():
             print(f"CD '{titulo}' agregado.")
 
         elif opcion == '5':
+            titulo = input("Ingresa el título del juego: ")
+            autor = input("Ingresa el desarrollador del juego: ")
+            año = obtener_numero("Ingresa el año del juego: ")
+            plataforma = input("Ingresa la plataforma del juego: ")
+            juego = Juego(titulo, autor, año, plataforma)
+            materiales.append(juego)
+            print(f"Juego '{titulo}' agregado.")
+
+        elif opcion == '6':
+            titulo = input("Ingresa el título del audiolibro: ")
+            autor = input("Ingresa el narrador del audiolibro: ")
+            año = obtener_numero("Ingresa el año del audiolibro: ")
+            duracion = obtener_numero("Ingresa la duración del audiolibro en minutos: ")
+            audiolibro = Audiolibro(titulo, autor, año, duracion)
+            materiales.append(audiolibro)
+            print(f"Audiolibro '{titulo}' agregado.")
+
+        elif opcion == '7':
             if materiales:
                 for material in materiales:
                     material.mostrar_informacion()
             else:
                 print("No hay materiales en la lista.")
 
-        elif opcion == '6':
+        elif opcion == '8':
             titulo = input("Ingresa el título del material a prestar: ")
             for material in materiales:
                 if material.titulo == titulo:
@@ -173,7 +239,7 @@ def menu():
             else:
                 print("Material no encontrado.")
 
-        elif opcion == '7':
+        elif opcion == '9':
             titulo = input("Ingresa el título del material a devolver: ")
             for material in materiales:
                 if material.titulo == titulo:
@@ -185,7 +251,7 @@ def menu():
             else:
                 print("Material no encontrado.")
 
-        elif opcion == '8':
+        elif opcion == '10':
             print("Saliendo...")
             break
 
@@ -194,4 +260,4 @@ def menu():
 
 if __name__ == "__main__":
     menu()
-#este mensaje solo esta en pseducodigo
+#este mensaje solo se mostrara en la rama 2#
